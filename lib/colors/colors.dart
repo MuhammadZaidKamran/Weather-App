@@ -1,3 +1,3 @@
 import 'package:flutter/material.dart';
 
-Color homeColor = Color(0xff4894FE);
+Color homeColor = const Color(0xff4894FE);

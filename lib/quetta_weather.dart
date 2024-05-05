@@ -1,31 +1,24 @@
 import 'dart:convert';
-import 'dart:ffi';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_app/colors/colors.dart';
-import 'package:weather_app/container/new_containers.dart';
+import 'package:weather_app/home_screen.dart';
 import 'package:weather_app/islamabad_weather.dart';
 import 'package:weather_app/lahore_weather.dart';
 import 'package:weather_app/multan_weather.dart';
 import 'package:weather_app/peshawar_weather.dart';
-import 'package:weather_app/quetta_weather.dart';
-import 'package:weather_app/weather_model.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class QuettaScreen extends StatefulWidget {
+  const QuettaScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<QuettaScreen> createState() => _QuettaScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _QuettaScreenState extends State<QuettaScreen> {
 
-  
-  //Weather? weather;
-
-  String firstValue = "Karachi";
+  String firstValue = "Quetta";
   var dropDownItems = [
     "Karachi",
     "Lahore",
@@ -35,52 +28,14 @@ class _HomeScreenState extends State<HomeScreen> {
     "Quetta",
   ];
 
-//  @override
-//   void initState() {
-//     getApi();
-//     // TODO: implement initState
-//     super.initState();
-//   }
 
   getApi() async {
-    var url = Uri.parse("https://api.openweathermap.org/data/2.5/weather?q=karachi,{country%20code}&appid=5d231ad57ebdf04883253c1dafa479e2");
+    var url = Uri.parse("https://api.openweathermap.org/data/2.5/weather?q=quetta,{country%20code}&appid=5d231ad57ebdf04883253c1dafa479e2");
     var response = await http.get(url);
     var responseBody = jsonDecode(response.body);
     return responseBody;
   }
 
-  // bool loading = true;
-
-  
-
-  // void getdata() async {
-  //   final String url = 'https://yahoo-weather5.p.rapidapi.com/weather';
-  //   final Map<String,String> headers = {
-  //     'X-RapidAPI-Key': 'f45d8848eamshad6366977ca5fe3p1c8858jsnb2a47996e921',
-  //     'X-RapidAPI-Host': 'yahoo-weather5.p.rapidapi.com'
-  //   };
-  //   final Map<String,String> params = {'location': 'karachi', 'u': 'c'};
-
-  //   Uri uri = Uri.parse(url);
-  //   uri = uri.replace(queryParameters: params);
-
-  //   try {
-  //     final response = await http.get(uri,headers: headers);
-  //     Map<String,dynamic> res = await json.decode(response.body);
-  //     print(res);
-  //     if(res.isNotEmpty) loading = false;
-  //   } catch (e) {
-  //     print(e);
-  //     loading = true;
-  //   }
-  // }
-
-  // getpostApi() async {
-  //   var url = Uri.parse('https://yahoo-weather5.p.rapidapi.com/weather');
-  //   var response = await http.get(url);
-  //   var responseBody = jsonDecode(response.body);
-  //   return responseBody;
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -115,21 +70,21 @@ class _HomeScreenState extends State<HomeScreen> {
                         }).toList(), onChanged: (newValue){
                           setState(() {
                            // firstValue = newValue.toString();
-                            if (newValue == "Lahore") {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const LahoreScreen()));
+                            if (newValue == "Karachi") {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
                               setState(() {});
+                            } else if(newValue == "Lahore") {
+                              setState(() {});
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const LahoreScreen()));
                             } else if(newValue == "Islamabad") {
                               setState(() {});
                               Navigator.push(context, MaterialPageRoute(builder: (context) => const IslamabadScreen()));
-                            } else if(newValue == "Multan") {
-                              setState(() {});
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const MultanScreen()));
                             } else if(newValue == "Peshawar") {
                               setState(() {});
                               Navigator.push(context, MaterialPageRoute(builder: (context) => const PeshawarScreen()));
-                            } else if(newValue == "Quetta") {
+                            } else if(newValue == "Multan") {
                               setState(() {});
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const QuettaScreen()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const MultanScreen()));
                             }
                            // Navigator.push(context, MaterialPageRoute(builder: (context) => const LahoreScreen()));
                           });  
@@ -230,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            const Text("Humidity",style: TextStyle(fontSize: 14,color: Colors.white,fontWeight: FontWeight.w500),),
+                             Text("Humidity",style: TextStyle(fontSize: 14,color: Colors.white,fontWeight: FontWeight.w500),),
                             Image.asset("assets/images/humidity.png",height: 40,width: 40,),
                              Text("${snapshot.data["main"]["humidity"]}%",style: TextStyle(fontSize: 14,color: Colors.white,fontWeight: FontWeight.w500),),
                           ],
@@ -276,31 +231,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-
-
-
-// Expanded(child: ListView.builder(
-//             itemCount: 7,
-//             itemBuilder: (context,index){
-//             return Container(
-//              // foregroundDecoration: BoxDecoration(color: Color.fromARGB(117, 182, 182, 182),),
-//               //color: Color.fromARGB(117, 182, 182, 182),
-//               padding: const EdgeInsets.all(10),
-//               child: ListTile(
-//                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),side: BorderSide(color: homeColor,width: 0.5)),
-//                 tileColor: const Color.fromARGB(106, 214, 247, 255),
-//                 leading: const Text("Mon"),
-//                 title: Row(
-//                   children: [
-//                     Image.asset("assets/images/cloud_sun_pic.webp",height: 40,width: 40,),
-//                     const Text("Sunny",style: TextStyle(fontSize: 14),),
-//                   ],
-//                 ),
-//                 trailing: const Text("23`",style: TextStyle(fontSize: 13),),
-//               ),
-//             );
-//           }))
-
-
-
